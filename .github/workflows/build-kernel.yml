@@ -117,6 +117,8 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         grep -rl -- "-Werror" --include=Makefile . | xargs sed -i 's/-Werror/-Wno-error/g'
         grep -rn -- "-Werror" --include=Makefile . || echo "no -Werror left"
+        echo 'KBUILD_CFLAGS += -fno-builtin-stpcpy' >> Makefile
+        tail -n 1 Makefile
 
     - name: Download source boot image
       if: env.BUILD_BOOT_IMG == 'true'
