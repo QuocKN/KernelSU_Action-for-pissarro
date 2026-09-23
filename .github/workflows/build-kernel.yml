@@ -77,6 +77,13 @@ jobs:
             unzip clang.zip -d clang-aosp/
         fi
 
+    - name: Fix custom clang ld shadow
+      if: env.USE_CUSTOM_CLANG == 'true'
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace
+        rm -f clang-aosp/bin/ld clang-aosp/bin/ld.bfd clang-aosp/bin/ld.gold
+        ls clang-aosp/bin/ | grep -E "^ld" || true
+
     - name: Download Gcc-aosp
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
